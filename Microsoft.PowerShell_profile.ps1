@@ -7,13 +7,13 @@ function searchWorkDirectory {
     Get-ChildItem -Path "~\Desktop\Work\development\" | Select FullName | fzf | %{ set-location $_.Trim() }
     ls
 }
-Set-Alias fwd searchWorkDirectory
+Set-Alias w searchWorkDirectory
 
 function searchPersonalDirectory {
     Get-ChildItem -Path "~\Desktop\Projects\" | Select FullName | fzf | %{ set-location $_.Trim() }
     ls
 }
-Set-Alias fpd searchPersonalDirectory
+Set-Alias p searchPersonalDirectory
 
 Set-Alias pws powershell.exe
 Set-Alias work goToWork
