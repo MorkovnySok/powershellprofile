@@ -19,6 +19,15 @@ function hist {
     (Get-Content (Get-PSReadlineOption).HistorySavePath) | Sort-Object -Unique | fzf | clip
 }
 
+# change into fzf file directory
+function czf {
+    $file = & fzf
+    if ($file) { 
+      $path = Split-Path $file -Parent
+      & cd "$path"
+    }
+}
+
 function OpenInVim {
     $file = & fzf
     if ($file) { & nvim $file }
