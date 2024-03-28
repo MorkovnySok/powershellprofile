@@ -3,6 +3,28 @@ function goToEmp {set-location "~\Desktop\Work\development\EMP\"}
 function goToEmp2 {set-location "~\Desktop\Work\development\EMP2\"}
 function goToVim {set-location "~\AppData\Local\nvim"}
 
+function gs {
+	param (
+		[Parameter(ValueFromPipeline)] $branch
+	)
+
+	Write-Host "switching to $branch" -ForegroundColor Green
+	git fetch; git stash; git switch $branch; git pull; git stash apply
+}
+
+function gf {
+	param (
+		[string] $branch
+	)
+	$branches = git branch -r | sls $branch | %{$_ -replace '\s+', ''} | Where-Object {$_ -ne ''} | % {$_ -replace 'origin/', ''}
+	if($branches.Count -gt 1) {
+		Write-Host "There are more than one branch found by this pattern. Be more specific" -ForegroundColor Red
+		$branches | % {Write-Host $_}
+		Throw
+	}
+	Write-Output $branches
+}
+
 function searchWorkDirectory {
     Get-ChildItem -Path "~\Desktop\Work\development\" | Select FullName | fzf | %{ set-location $_.Trim() }
     ls
