@@ -73,7 +73,7 @@ Set-Alias cfg goToVim
 Set-Alias lz lazygit
 #Remove-Item Alias:curl
 
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+#Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 Set-PsFzfOption -EnableAliasFuzzyEdit
 Set-PsFzfOption -EnableAliasFuzzyFasd
 Set-PsFzfOption -EnableAliasFuzzyHistory
@@ -89,11 +89,8 @@ Set-PsFzfOption -TabExpansion
 
 # PSReadLine stuff
 # https://raw.githubusercontent.com/PowerShell/PSReadLine/master/PSReadLine/SamplePSReadLineProfile.ps1
-Set-PSReadLineKeyHandler -Key "Alt+b" -ScriptBlock { Invoke-FzfTabCompletion }
+Set-PSReadLineKeyHandler -Key "Tab" -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PSReadLineOption -PredictionViewStyle ListView
-#Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
-#Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
-Set-PSReadLineOption -EditMode Windows
 
 # This example will replace any aliases on the command line with the resolved commands.
 Set-PSReadLineKeyHandler -Key "Alt+%" `
