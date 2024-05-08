@@ -1,5 +1,5 @@
-function goToWork {set-location "~\Desktop\Work\development\"}
-function goToEmp {set-location "~\Desktop\Work\development\EMP\"}
+function goToWork {set-location "~\Work"}
+function goToEmp {set-location "~\Work\emp\"}
 function goToEmp2 {set-location "~\Desktop\Work\development\EMP2\"}
 function goToVim {set-location "~\AppData\Local\nvim"}
 
@@ -26,13 +26,13 @@ function gf {
 }
 
 function searchWorkDirectory {
-    Get-ChildItem -Path "~\Desktop\Work\development\" | Select FullName | fzf | %{ set-location $_.Trim() }
+    Get-ChildItem -Path "~\Work" | Select FullName | fzf | %{ set-location $_.Trim() }
     ls
 }
 Set-Alias w searchWorkDirectory
 
 function searchPersonalDirectory {
-    Get-ChildItem -Path "~\Desktop\Projects\" | Select FullName | fzf | %{ set-location $_.Trim() }
+    Get-ChildItem -Path "~\Projects\" | Select FullName | fzf | %{ set-location $_.Trim() }
     ls
 }
 Set-Alias p searchPersonalDirectory
@@ -66,7 +66,9 @@ Set-Alias emp goToEmp
 Set-Alias emp2 goToEmp2
 Set-Alias cfg goToVim
 Set-Alias lz lazygit
-Remove-Item Alias:curl
+#Remove-Item Alias:curl
+
+Import-Module PSFzf
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 Set-PsFzfOption -EnableAliasFuzzyEdit
 Set-PsFzfOption -EnableAliasFuzzyFasd
@@ -78,11 +80,23 @@ Set-PsFzfOption -EnableAliasFuzzyScoop
 Set-PsFzfOption -EnableAliasFuzzyZLocation
 Set-PsFzfOption -EnableAliasFuzzyGitStatus
 Set-PsFzfOption -EnableFd
+Set-PsFzfOption -TabExpansion
 
 Import-Module PSReadLine
-Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
-Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
+#Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+#Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 Set-PSReadLineOption -EditMode Windows
 
 # Store previous command's output in $__
 $PSDefaultParameterValues['Out-Default:OutVariable'] = '__'
+
+# Import the Chocolatey Profile that contains the necessary code to enable
+# tab-completions to function for `choco`.
+# Be aware that if you are missing these lines from your profile, tab completion
+# for `choco` will not function.
+# See https://ch0.co/tab-completion for details.
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module "$ChocolateyProfile"
+}
