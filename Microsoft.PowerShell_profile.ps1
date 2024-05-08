@@ -1,7 +1,12 @@
+Import-Module PSReadLine
+Import-Module PSFzf
+
+
 function goToWork {set-location "~\Work"}
 function goToEmp {set-location "~\Work\emp\"}
 function goToEmp2 {set-location "~\Desktop\Work\development\EMP2\"}
 function goToVim {set-location "~\AppData\Local\nvim"}
+
 
 function gs {
 	param (
@@ -68,7 +73,6 @@ Set-Alias cfg goToVim
 Set-Alias lz lazygit
 #Remove-Item Alias:curl
 
-Import-Module PSFzf
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 Set-PsFzfOption -EnableAliasFuzzyEdit
 Set-PsFzfOption -EnableAliasFuzzyFasd
@@ -85,8 +89,7 @@ Set-PsFzfOption -TabExpansion
 
 # PSReadLine stuff
 # https://raw.githubusercontent.com/PowerShell/PSReadLine/master/PSReadLine/SamplePSReadLineProfile.ps1
-Import-Module PSReadLine
-Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
+Set-PSReadLineKeyHandler -Key "Alt+b" -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PSReadLineOption -PredictionViewStyle ListView
 #Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 #Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
