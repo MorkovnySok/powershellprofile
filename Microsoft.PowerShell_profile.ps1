@@ -41,13 +41,13 @@ function gf {
 }
 
 function searchWorkDirectory {
-    Get-ChildItem -Path "~\Work" | Select FullName | fzf | %{ set-location $_.Trim() }
+    Get-ChildItem -Path "~\Work" | Select FullName -ExpandProperty FullName | fzf | %{ set-location $_.Trim() }
     ls
 }
 Set-Alias w searchWorkDirectory
 
 function searchPersonalDirectory {
-    Get-ChildItem -Path "~\Projects\" | Select FullName | fzf | %{ set-location $_.Trim() }
+    Get-ChildItem -Path "~\Projects\" | Select FullName -ExpandProperty FullName | fzf | %{ set-location $_.Trim() }
     ls
 }
 Set-Alias p searchPersonalDirectory
