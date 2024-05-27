@@ -1,6 +1,16 @@
 Import-Module PSReadLine
 Import-Module PSFzf
 
+function prompt {
+  $loc = $executionContext.SessionState.Path.CurrentLocation;
+
+  $out = ""
+  if ($loc.Provider.Name -eq "FileSystem") {
+    $out += "$([char]27)]9;9;`"$($loc.ProviderPath)`"$([char]27)\"
+  }
+  $out += "PS $loc$('>' * ($nestedPromptLevel + 1)) ";
+  return $out
+}
 
 function goToWork {set-location "~\Work"}
 function goToEmp {set-location "~\Work\emp\"}
@@ -32,13 +42,13 @@ function gf {
 }
 
 function searchWorkDirectory {
-    Get-ChildItem -Path "~\Work" | Select FullName | fzf | %{ set-location $_.Trim() }
+    Get-ChildItem -Path "~\Work" | Select FullName -ExpandProperty FullName | fzf | %{ set-location $_.Trim() }
     ls
 }
 Set-Alias w searchWorkDirectory
 
 function searchPersonalDirectory {
-    Get-ChildItem -Path "~\Projects\" | Select FullName | fzf | %{ set-location $_.Trim() }
+    Get-ChildItem -Path "~\Projects\" | Select FullName -ExpandProperty FullName | fzf | %{ set-location $_.Trim() }
     ls
 }
 Set-Alias p searchPersonalDirectory
