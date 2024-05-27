@@ -4,6 +4,7 @@ Import-Module PSFzf
 
 function goToWork {set-location "~\Work"}
 function goToEmp {set-location "~\Work\emp\"}
+function empc {set-location "~\Work\emp\Client"}
 function goToEmp2 {set-location "~\Desktop\Work\development\EMP2\"}
 function goToVim {set-location "~\AppData\Local\nvim"}
 
@@ -65,7 +66,6 @@ function mklink { cmd /c mklink $args }
 
 function rgf($pattern) { rg --files | rg "$pattern" }
 
-Set-Alias pws powershell.exe
 Set-Alias work goToWork
 Set-Alias emp goToEmp
 Set-Alias emp2 goToEmp2
