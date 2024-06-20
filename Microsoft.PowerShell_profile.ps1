@@ -12,10 +12,12 @@ function prompt {
   return $out
 }
 
+function notes {nvim $env:USERPROFILE/personal/}
+Set-Alias n notes
 function goToWork {set-location "~\Work"}
 function goToEmp {set-location "~\Work\emp\"}
 function empc {set-location "~\Work\emp\Client"}
-function goToEmp2 {set-location "~\Desktop\Work\development\EMP2\"}
+function goToEmp2 {set-location "~\Work\emp2\"}
 function goToVim {set-location "~\AppData\Local\nvim"}
 
 
@@ -81,6 +83,7 @@ Set-Alias emp goToEmp
 Set-Alias emp2 goToEmp2
 Set-Alias cfg goToVim
 Set-Alias lz lazygit
+Set-Alias help Get-Help
 #Remove-Item Alias:curl
 
 #Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
